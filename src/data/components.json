@@ -1,0 +1,48 @@
+[
+  {
+    "id": "model-gpt4",
+    "name": "GPT‑4",
+    "type": "model",
+    "description": "Un modelo de lenguaje grande (LLM) creado por OpenAI capaz de comprender y generar texto natural en múltiples idiomas. Ideal para tareas de generación, resumen, traducción y razonamiento.",
+    "tags": ["LLM", "lenguaje", "generación"],
+    "usage": "// Ejemplo de uso con la biblioteca de la API de OpenAI\nconst response = await openai.chat.completions.create({\n  model: 'gpt-4',\n  messages: [{ role: 'user', content: 'Hola, ¿cómo estás?' }],\n});\nconsole.log(response.choices[0].message.content);",
+    "image": "https://source.unsplash.com/600x400/?ai,chatbot"
+  },
+  {
+    "id": "dataset-imagenet",
+    "name": "ImageNet",
+    "type": "dataset",
+    "description": "Una base de datos de imágenes ampliamente utilizada para entrenar y evaluar modelos de visión por computador. Contiene millones de imágenes anotadas en miles de categorías.",
+    "tags": ["visión", "clasificación", "imágenes"],
+    "usage": "// Cargar el dataset ImageNet con PyTorch\nfrom torchvision import datasets, transforms\ndata_dir = '/ruta/imagenet'\ndataset = datasets.ImageFolder(data_dir, transform=transforms.ToTensor())",
+    "image": "https://source.unsplash.com/600x400/?dataset,images"
+  },
+  {
+    "id": "dataset-coco",
+    "name": "COCO",
+    "type": "dataset",
+    "description": "El Common Objects in Context (COCO) es un conjunto de datos a gran escala para detección de objetos, segmentación y subtitulado de imágenes. Proporciona imágenes con anotaciones detalladas.",
+    "tags": ["detección", "segmentación", "visión"],
+    "usage": "// Usar COCO con el API de torchvision\nfrom torchvision.datasets import CocoDetection\ncoco = CocoDetection(root='imagenes/', annFile='annotations/instances_train.json')",
+    "image": "https://source.unsplash.com/600x400/?object,detection"
+  },
+  {
+    "id": "prompt-traduccion",
+    "name": "Prompt de traducción",
+    "type": "prompt",
+    "description": "Prompt predefinido para traducir texto de un idioma a otro utilizando un modelo de lenguaje. Incluye instrucciones para conservar el tono y estilo del contenido original.",
+    "tags": ["prompt", "traducción", "idiomas"],
+    "usage": "/* Ejemplo de prompt para traducir del inglés al español */\nEres un traductor profesional. Traduce el siguiente texto al español manteniendo el tono y el contexto original.\nTexto: 'The quick brown fox jumps over the lazy dog.'",
+    "image": "https://source.unsplash.com/600x400/?translation,languages"
+  },
+  {
+    "id": "model-sentiment",
+    "name": "Clasificador de sentimientos",
+    "type": "model",
+    "description": "Modelo supervisado para análisis de sentimientos en textos en español. Devuelve etiquetas positivas, negativas o neutras basadas en el contenido.",
+    "tags": ["sentimientos", "NLP", "clasificación"],
+    "usage": "// Uso del clasificador de sentimientos con Hugging Face Transformers\nimport { pipeline } from '@huggingface/transformers';\nconst sentiment = await pipeline('sentiment-analysis', 'pierreguillou/bert-base-cased-sentiment');\nconst result = await sentiment('Me encanta este producto');\nconsole.log(result);
+    ",
+    "image": "https://source.unsplash.com/600x400/?sentiment,emotion"
+  }
+]

@@ -1,0 +1,9 @@
+# node_modules y build
+node_modules/
+dist/
+build/
+
+# config local
+.env
+.DS_Store
+*.log

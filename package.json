@@ -1,0 +1,23 @@
+{
+  "name": "ai-catalog",
+  "version": "1.0.0",
+  "description": "Catálogo interactivo de componentes de IA (modelos, datasets y prompts).",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.0.0",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^4.1.0",
+    "vite": "^5.2.0"
+  }
+}
