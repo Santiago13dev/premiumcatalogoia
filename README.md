@@ -1,130 +1,121 @@
-# Catálogo de componentes de Inteligencia Artificial
+# 🧠 Catálogo Premium de Componentes de IA
 
-Este proyecto es un ejemplo de catálogo interactivo construido **con JavaScript** para listar, filtrar y explorar distintos componentes de IA: modelos, datasets y prompts. El objetivo es ilustrar cómo organizar un repositorio que incluya un pequeño backend y un frontend React con Tailwind CSS.
+¡Bienvenido a tu propio **Catálogo de Componentes de Inteligencia Artificial**! Esta aplicación te permite explorar, filtrar, y **probar prompts en vivo** usando modelos locales como `llama3` gracias a [Ollama](https://ollama.com/).
 
-## Arquitectura
+---
 
-El proyecto se divide en dos partes principales:
+## 🌟 Características
 
-1. **Frontend (carpeta `src/`)**: Utiliza React para construir una interfaz de usuario basada en componentes. React es una biblioteca que permite crear interfaces de usuario a partir de piezas reutilizables llamadas componentes【784892975962973†L22-L33】. Cada tarjeta del catálogo es un componente independiente (`ComponentCard`), que se compone dentro del componente principal `App`. Cuando se selecciona una tarjeta se muestra un modal (`Modal`) con la información detallada. Tailwind CSS se usa como framework de utilidades para dar estilo a la aplicación de forma rápida y moderna【816636246807364†L7-L12】.
-2. **Backend (carpeta `server/`)**: Un pequeño servidor Node.js con Express. Express se describe como un framework web rápido y minimalista para Node.js【947952538608249†L75-L100】. Exponemos dos endpoints REST: uno para obtener la lista de componentes (`/api/components`) y otro para consultar un componente por su `id` (`/api/components/:id`). Aunque el frontend importa el JSON directamente, disponer del backend permite desacoplar los datos o usarlos en otras aplicaciones.
+- ✅ Listado dinámico de componentes de IA (modelos, datasets, prompts)
+- 🔍 Filtros por tipo y etiquetas
+- 🧪 Probador de prompts en vivo con `llama3` local
+- 💻 Backend con Node.js + Express para procesar prompts
+- 💅 UI moderna con React + TailwindCSS + Vite
 
-La configuración de Vite (archivos `vite.config.js` y `package.json`) simplifica el arranque y la construcción del frontend. Tailwind se configura en `tailwind.config.js` y se incluye mediante PostCSS.
+---
 
-## Estructura de carpetas
+## 📂 Estructura del proyecto
 
 ```
-ai-catalog/
-├── package.json            # Definición de dependencias y scripts
-├── tailwind.config.js      # Configuración de Tailwind CSS
-├── postcss.config.js       # Configuración de PostCSS
-├── vite.config.js          # Configuración de Vite para React
-├── server/
-│   └── server.js          # Servidor Express con endpoints de API
+premiumcatalogoia/
 ├── public/
-│   └── index.html          # Plantilla HTML principal
 ├── src/
-│   ├── main.jsx           # Punto de entrada de React
-│   ├── App.jsx            # Componente raíz con filtros y lista de tarjetas
-│   ├── index.css          # Estilos globales y Tailwind
+│   ├── components/
+│   │   ├── ComponentCard.jsx
+│   │   ├── Modal.jsx
+│   │   └── PromptTester.jsx
 │   ├── data/
-│   │   └── components.json # Datos de ejemplo con 5 componentes
-│   └── components/
-│       ├── ComponentCard.jsx # Tarjeta individual
-│       └── Modal.jsx        # Modal para detalles
-└── README.md
+│   │   └── components.json
+│   ├── App.jsx
+│   └── index.css
+├── server/
+│   └── server.js
+├── package.json
+├── tailwind.config.js
+└── vite.config.js
 ```
 
-### Componentes clave
+---
 
-- **`components.json`**: Un archivo JSON de ejemplo con cinco elementos de distinta naturaleza (modelos, datasets y un prompt). Cada objeto contiene `id`, `name`, `type`, `description`, `tags`, `usage` (ejemplo de uso) e `image` (URL de una imagen representativa).
-- **`ComponentCard.jsx`**: Presenta la información resumida de un componente. Usa una imagen, nombre, tipo, breve descripción y una lista de etiquetas. Incluye un botón para abrir el modal de detalles. Está diseñado como un componente reutilizable.
-- **`Modal.jsx`**: Muestra los detalles completos del componente seleccionado, incluyendo el ejemplo de uso con formato de código. El modal es flotante y se cierra pulsando la X o fuera del área.
-- **`App.jsx`**: Gestiona el estado de la aplicación: filtros por tipo y etiquetas, selección de componentes y renderizado de la lista. Importa los datos directamente desde `components.json` y aplica filtros en memoria.
-- **`server/server.js`**: Servidor Express que expone dos rutas REST. Permite desacoplar el origen de datos y escalar hacia un almacenamiento persistente.
+## 🚀 Instalación y ejecución
 
-## Wireframes
-
-A continuación se muestran wireframes sencillos que ilustran la disposición general de la interfaz. Utilizan caracteres ASCII para representar la estructura.
-
-### Vista principal (lista de componentes)
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Catálogo de componentes de IA                              │
-│ ┌──────────────┐ ┌───────────────────────────────┐         │
-│ │ [Selector]   │ │ Buscar por etiqueta…          │         │
-│ └──────────────┘ └───────────────────────────────┘         │
-│                                                             │
-│ ┌─────────────────────┐ ┌─────────────────────┐             │
-│ │ Imagen              │ │ Imagen              │             │
-│ │ Nombre componente   │ │ Nombre componente   │             │
-│ │ Tipo                │ │ Tipo                │             │
-│ │ Descripción breve…  │ │ Descripción breve…  │             │
-│ │ [tags] [tags]        │ │ [tags] [tags]        │             │
-│ │ [Ver detalles]       │ │ [Ver detalles]       │             │
-│ └─────────────────────┘ └─────────────────────┘             │
-│ … (más tarjetas en rejilla responsiva)                      │
-└─────────────────────────────────────────────────────────────┘
+### 1. Clona el repositorio
+```bash
+git clone https://github.com/tuusuario/premiumcatalogoia.git
+cd premiumcatalogoia
 ```
 
-### Vista de detalle (modal)
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│ Nombre del componente                      ×               │
-├─────────────────────────────────────────────────────────────┤
-│ Tipo: model/dataset/prompt                               │
-│ Imagen grande                                             │
-│ Descripción completa                                      │
-│ Etiquetas: [tag] [tag] …                                  │
-│                                                            │
-│ Ejemplo de uso:                                            │
-│ ┌─────────────────────────────────────────────────────────┐ │
-│ │ Código de ejemplo con formato monoespaciado             │ │
-│ └─────────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────┘
+### 2. Instala las dependencias
+```bash
+npm install
 ```
 
-## Instrucciones de uso
+### 3. Instala y configura [Ollama](https://ollama.com/)
+```bash
+# Instala el modelo Llama3 si aún no lo tienes
+ollama run llama3
+```
 
-1. **Instalación de dependencias**
+### 4. Inicia el backend
+```bash
+npm run start
+# Corre en http://localhost:3000
+```
 
-   En la raíz del proyecto ejecuta:
+### 5. En otra terminal, inicia el frontend
+```bash
+npm run dev
+# Corre en http://localhost:5173
+```
 
-   ```bash
-   npm install
-   ```
+---
 
-   Esto instala React, Express y Tailwind CSS, así como Vite y los plugins necesarios.
+## 🧪 Cómo usar el probador de prompts
 
-2. **Ejecutar el frontend en modo desarrollo**
+1. Selecciona un componente de tipo `prompt`
+2. En el modal, ingresa el texto en el campo de entrada
+3. Haz clic en “Probar Prompt”
+4. Verás la respuesta generada por IA en tiempo real
 
-   Para arrancar el servidor de desarrollo de Vite (recarga en caliente):
+> Nota: los prompts deben tener `{input}` para marcar dónde se reemplaza el texto del usuario.
 
-   ```bash
-   npm run dev
-   ```
+---
 
-   El proyecto se servirá normalmente en `http://localhost:5173`.
+## 📦 JSON de componentes de ejemplo
 
-3. **Arrancar el backend (opcional)**
+```json
+{
+  "id": "1",
+  "name": "Resumidor de texto",
+  "type": "prompt",
+  "tags": ["resumen", "texto"],
+  "prompt": "Resume el siguiente texto:\n\n{input}",
+  "description": "Devuelve un resumen del texto proporcionado",
+  "usage": "POST /api/try-prompt\n{ prompt: '...', input: '...' }"
+}
+```
 
-   Si quieres exponer los endpoints del API, primero genera el bundle de producción del frontend y luego inicia el servidor:
+---
 
-   ```bash
-   npm run build       # compila el frontend en la carpeta dist
-   npm start           # inicia el servidor Express en el puerto 3000
-   ```
+## 💡 Futuras mejoras
 
-   La aplicación completa (frontend estático y API) estará disponible en `http://localhost:3000`.
+| Idea | Estado |
+|------|--------|
+| Editor visual de prompts | 🟡 Pendiente |
+| Soporte para más modelos (Mistral, Phi) | 🟡 En camino |
+| Exportación de componentes en Markdown/ZIP | 🔜 |
+| Subida de imagen o PDF para análisis | 🔜 |
 
-## Justificación de decisiones
+---
 
-* **React**: se eligió React porque permite construir interfaces de usuario mediante componentes reutilizables. La documentación oficial destaca que React es "la biblioteca para interfaces de usuario web y nativas"【784892975962973†L22-L25】 y que los componentes son funciones de JavaScript que devuelven lo que debe aparecer en la pantalla【784892975962973†L68-L74】. Esto facilita descomponer la UI en tarjetas y modales y reutilizarlos.
-* **Tailwind CSS**: optamos por Tailwind porque es un framework de utilidades que permite crear diseños modernos sin salir del marcado HTML【816636246807364†L7-L12】. Las clases utilitarias simplifican el prototipado rápido y se integran bien con React. Además, habilitar `darkMode: 'class'` nos permite añadir un tema oscuro simplemente añadiendo la clase `dark` en el `body`.
-* **Express**: el backend utiliza Express, un framework minimalista para Node.js. La documentación de Express lo describe como un framework web rápido y no opinado【947952538608249†L75-L100】 con un conjunto de características robustas para aplicaciones web y móviles【947952538608249†L99-L103】. Esto lo hace adecuado para exponer un pequeño API sin demasiada sobrecarga.
+## 🧑‍💻 Autor
 
-## Notas finales
+Desarrollado con 💙 por **Santiago Rodríguez**  
+🎓 Full-stack Developer | DevOps | AI Enthusiast  
+📫 [TuCorreo@ejemplo.com]
 
-Este proyecto pretende ser una guía inicial para construir un catálogo de componentes de IA. Puedes ampliar el archivo JSON con nuevos modelos, datasets o prompts y conectar la API a una base de datos. También puedes explorar la integración con bibliotecas como Prisma u ORMs para persistencia, o frameworks completos como Next.js para renderizado del lado del servidor.
+---
+
+## 📄 Licencia
+
+Este proyecto está bajo la licencia MIT.
