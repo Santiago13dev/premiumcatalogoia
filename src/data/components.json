@@ -43,5 +43,13 @@
     "tags": ["sentimientos", "NLP", "clasificación"],
     "usage": "// Uso del clasificador de sentimientos con Hugging Face Transformers\nimport { pipeline } from '@huggingface/transformers';\nconst sentiment = await pipeline('sentiment-analysis', 'pierreguillou/bert-base-cased-sentiment');\nconst result = await sentiment('Me encanta este producto');\nconsole.log(result);",
     "image": "https://source.unsplash.com/600x400/?sentiment,emotion"
+  },
+  {
+    "id": "1",
+    "name": "Resumidor de texto",
+    "type": "prompt",
+    "description": "Recibe un texto largo y devuelve un resumen corto",
+    "tags": ["prompt"],
+    "prompt": "Resume el siguiente texto:\n\n{input}"
   }
 ]

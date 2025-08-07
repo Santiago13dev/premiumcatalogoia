@@ -41,3 +41,25 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
+
+const axios = require('axios');
+
+app.post('/api/try-prompt', async (req, res) => {
+  const { prompt, input } = req.body;
+
+  const fullPrompt = prompt.replace('{input}', input);
+
+  try {
+    const response = await axios.post('http://localhost:11434/api/chat', {
+      model: 'llama3',
+      messages: [
+        { role: 'user', content: fullPrompt }
+      ]
+    });
+
+    res.json({ output: response.data.message.content });
+  } catch (err) {
+    console.error(err.response?.data || err.message);
+    res.status(500).json({ error: 'Error al comunicarse con Ollama' });
+  }
+});

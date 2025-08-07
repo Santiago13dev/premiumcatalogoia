@@ -1,4 +1,5 @@
 import React from 'react';
+import PromptTester from './PromptTester'; // ⬅️ Importamos el probador de prompts
 
 /**
  * Modal reutilizable para mostrar los detalles de un componente.
@@ -53,8 +54,16 @@ const Modal = ({ component, onClose }) => {
             <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-2">
               Ejemplo de uso
             </h3>
-            {/* Se usa <pre> para preservar formato y se envuelve en <code> para semántica */}
-            <pre className="bg-gray-100 dark:bg-gray-800 rounded p-4 text-sm overflow-x-auto"><code>{component.usage}</code></pre>
+            <pre className="bg-gray-100 dark:bg-gray-800 rounded p-4 text-sm overflow-x-auto">
+              <code>{component.usage}</code>
+            </pre>
+          </div>
+        )}
+
+        {/* 🧪 Sección de prueba de prompts (solo para tipo "prompt") */}
+        {component.type === 'prompt' && (
+          <div className="mt-6">
+            <PromptTester promptTemplate={component.prompt} />
           </div>
         )}
       </div>
