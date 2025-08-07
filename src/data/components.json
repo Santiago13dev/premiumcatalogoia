@@ -41,8 +41,7 @@
     "type": "model",
     "description": "Modelo supervisado para análisis de sentimientos en textos en español. Devuelve etiquetas positivas, negativas o neutras basadas en el contenido.",
     "tags": ["sentimientos", "NLP", "clasificación"],
-    "usage": "// Uso del clasificador de sentimientos con Hugging Face Transformers\nimport { pipeline } from '@huggingface/transformers';\nconst sentiment = await pipeline('sentiment-analysis', 'pierreguillou/bert-base-cased-sentiment');\nconst result = await sentiment('Me encanta este producto');\nconsole.log(result);
-    ",
+    "usage": "// Uso del clasificador de sentimientos con Hugging Face Transformers\nimport { pipeline } from '@huggingface/transformers';\nconst sentiment = await pipeline('sentiment-analysis', 'pierreguillou/bert-base-cased-sentiment');\nconst result = await sentiment('Me encanta este producto');\nconsole.log(result);",
     "image": "https://source.unsplash.com/600x400/?sentiment,emotion"
   }
 ]
