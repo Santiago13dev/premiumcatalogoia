@@ -1,19 +1,46 @@
 [
   {
     "id": "model-gpt4",
-    "name": "GPT‑4",
+    "name": "GPT-4",
     "type": "model",
     "description": "Un modelo de lenguaje grande (LLM) creado por OpenAI capaz de comprender y generar texto natural en múltiples idiomas. Ideal para tareas de generación, resumen, traducción y razonamiento.",
-    "tags": ["LLM", "lenguaje", "generación"],
+    "tags": ["LLM", "lenguaje", "generación", "OpenAI"],
     "usage": "// Ejemplo de uso con la biblioteca de la API de OpenAI\nconst response = await openai.chat.completions.create({\n  model: 'gpt-4',\n  messages: [{ role: 'user', content: 'Hola, ¿cómo estás?' }],\n});\nconsole.log(response.choices[0].message.content);",
     "image": "https://source.unsplash.com/600x400/?ai,chatbot"
+  },
+  {
+    "id": "model-claude",
+    "name": "Claude 3",
+    "type": "model",
+    "description": "Modelo de IA conversacional desarrollado por Anthropic, conocido por su seguridad y capacidad de seguir instrucciones complejas con alta precisión.",
+    "tags": ["LLM", "conversacional", "Anthropic", "seguro"],
+    "usage": "// Uso con la API de Anthropic\nconst response = await anthropic.messages.create({\n  model: 'claude-3-opus-20240229',\n  messages: [{ role: 'user', content: 'Explica la fotosíntesis' }]\n});",
+    "image": "https://source.unsplash.com/600x400/?robot,assistant"
+  },
+  {
+    "id": "model-llama",
+    "name": "Llama 2",
+    "type": "model",
+    "description": "Modelo de lenguaje de código abierto de Meta, disponible en diferentes tamaños y optimizado para tareas de chat y generación de código.",
+    "tags": ["LLM", "open-source", "Meta", "código"],
+    "usage": "// Ejemplo con Hugging Face Transformers\nfrom transformers import AutoModelForCausalLM\nmodel = AutoModelForCausalLM.from_pretrained('meta-llama/Llama-2-7b-chat-hf')",
+    "image": "https://source.unsplash.com/600x400/?llama,technology"
+  },
+  {
+    "id": "model-stable-diffusion",
+    "name": "Stable Diffusion XL",
+    "type": "model",
+    "description": "Modelo de generación de imágenes de alta calidad a partir de descripciones textuales. Capaz de crear arte digital, fotografías realistas y diseños creativos.",
+    "tags": ["imagen", "generación", "arte", "diffusion"],
+    "usage": "// Usando la API de Stability AI\nconst response = await stability.generate({\n  prompt: 'Un paisaje futurista con naves espaciales',\n  style: 'photorealistic'\n});",
+    "image": "https://source.unsplash.com/600x400/?digital,art"
   },
   {
     "id": "dataset-imagenet",
     "name": "ImageNet",
     "type": "dataset",
     "description": "Una base de datos de imágenes ampliamente utilizada para entrenar y evaluar modelos de visión por computador. Contiene millones de imágenes anotadas en miles de categorías.",
-    "tags": ["visión", "clasificación", "imágenes"],
+    "tags": ["visión", "clasificación", "imágenes", "benchmark"],
     "usage": "// Cargar el dataset ImageNet con PyTorch\nfrom torchvision import datasets, transforms\ndata_dir = '/ruta/imagenet'\ndataset = datasets.ImageFolder(data_dir, transform=transforms.ToTensor())",
     "image": "https://source.unsplash.com/600x400/?dataset,images"
   },
@@ -21,35 +48,93 @@
     "id": "dataset-coco",
     "name": "COCO",
     "type": "dataset",
-    "description": "El Common Objects in Context (COCO) es un conjunto de datos a gran escala para detección de objetos, segmentación y subtitulado de imágenes. Proporciona imágenes con anotaciones detalladas.",
-    "tags": ["detección", "segmentación", "visión"],
+    "description": "El Common Objects in Context (COCO) es un conjunto de datos a gran escala para detección de objetos, segmentación y subtitulado de imágenes.",
+    "tags": ["detección", "segmentación", "visión", "objetos"],
     "usage": "// Usar COCO con el API de torchvision\nfrom torchvision.datasets import CocoDetection\ncoco = CocoDetection(root='imagenes/', annFile='annotations/instances_train.json')",
     "image": "https://source.unsplash.com/600x400/?object,detection"
+  },
+  {
+    "id": "dataset-squad",
+    "name": "SQuAD 2.0",
+    "type": "dataset",
+    "description": "Stanford Question Answering Dataset, usado para entrenar modelos de comprensión lectora y respuesta a preguntas.",
+    "tags": ["NLP", "QA", "comprensión", "texto"],
+    "usage": "// Cargar SQuAD con datasets de Hugging Face\nfrom datasets import load_dataset\nsquad = load_dataset('squad_v2')",
+    "image": "https://source.unsplash.com/600x400/?reading,questions"
+  },
+  {
+    "id": "dataset-wikitext",
+    "name": "WikiText-103",
+    "type": "dataset",
+    "description": "Corpus de texto extraído de Wikipedia con más de 100 millones de tokens, ideal para entrenar modelos de lenguaje.",
+    "tags": ["NLP", "texto", "Wikipedia", "lenguaje"],
+    "usage": "// Cargar WikiText\nimport datasets\nwikitext = datasets.load_dataset('wikitext', 'wikitext-103-v1')",
+    "image": "https://source.unsplash.com/600x400/?wikipedia,text"
   },
   {
     "id": "prompt-traduccion",
     "name": "Prompt de traducción",
     "type": "prompt",
-    "description": "Prompt predefinido para traducir texto de un idioma a otro utilizando un modelo de lenguaje. Incluye instrucciones para conservar el tono y estilo del contenido original.",
-    "tags": ["prompt", "traducción", "idiomas"],
+    "description": "Prompt predefinido para traducir texto de un idioma a otro utilizando un modelo de lenguaje.",
+    "tags": ["prompt", "traducción", "idiomas", "multilingüe"],
     "usage": "/* Ejemplo de prompt para traducir del inglés al español */\nEres un traductor profesional. Traduce el siguiente texto al español manteniendo el tono y el contexto original.\nTexto: 'The quick brown fox jumps over the lazy dog.'",
+    "prompt": "Traduce el siguiente texto de {source_lang} a {target_lang}:\n\n{text}\n\nTraducción:",
     "image": "https://source.unsplash.com/600x400/?translation,languages"
   },
   {
-    "id": "model-sentiment",
-    "name": "Clasificador de sentimientos",
-    "type": "model",
-    "description": "Modelo supervisado para análisis de sentimientos en textos en español. Devuelve etiquetas positivas, negativas o neutras basadas en el contenido.",
-    "tags": ["sentimientos", "NLP", "clasificación"],
-    "usage": "// Uso del clasificador de sentimientos con Hugging Face Transformers\nimport { pipeline } from '@huggingface/transformers';\nconst sentiment = await pipeline('sentiment-analysis', 'pierreguillou/bert-base-cased-sentiment');\nconst result = await sentiment('Me encanta este producto');\nconsole.log(result);",
-    "image": "https://source.unsplash.com/600x400/?sentiment,emotion"
-  },
-  {
-    "id": "1",
+    "id": "prompt-resumen",
     "name": "Resumidor de texto",
     "type": "prompt",
-    "description": "Recibe un texto largo y devuelve un resumen corto",
-    "tags": ["prompt"],
-    "prompt": "Resume el siguiente texto:\n\n{input}"
+    "description": "Genera resúmenes concisos y precisos de textos largos manteniendo los puntos clave.",
+    "tags": ["prompt", "resumen", "NLP", "texto"],
+    "prompt": "Resume el siguiente texto en máximo {max_words} palabras:\n\n{input}\n\nResumen:",
+    "usage": "// Uso del prompt de resumen\nconst prompt = `Resume el siguiente texto en máximo 50 palabras:\n\n${longText}\n\nResumen:`;",
+    "image": "https://source.unsplash.com/600x400/?summary,document"
+  },
+  {
+    "id": "prompt-codigo",
+    "name": "Generador de código",
+    "type": "prompt",
+    "description": "Prompt optimizado para generar código en diferentes lenguajes de programación con explicaciones.",
+    "tags": ["prompt", "código", "programación", "desarrollo"],
+    "prompt": "Genera código en {language} que {task}. Incluye comentarios explicativos.",
+    "usage": "// Ejemplo para generar una función\nconst prompt = 'Genera código en Python que ordene una lista de números usando quicksort. Incluye comentarios explicativos.';",
+    "image": "https://source.unsplash.com/600x400/?code,programming"
+  },
+  {
+    "id": "model-whisper",
+    "name": "Whisper",
+    "type": "model",
+    "description": "Modelo de reconocimiento de voz de OpenAI que puede transcribir y traducir audio en múltiples idiomas con alta precisión.",
+    "tags": ["audio", "transcripción", "voz", "OpenAI"],
+    "usage": "// Transcribir audio con Whisper\nimport whisper\nmodel = whisper.load_model('base')\nresult = model.transcribe('audio.mp3')",
+    "image": "https://source.unsplash.com/600x400/?microphone,audio"
+  },
+  {
+    "id": "model-yolo",
+    "name": "YOLOv8",
+    "type": "model",
+    "description": "You Only Look Once - Modelo de detección de objetos en tiempo real, rápido y preciso para aplicaciones de visión por computador.",
+    "tags": ["visión", "detección", "tiempo-real", "objetos"],
+    "usage": "// Detección con YOLOv8\nfrom ultralytics import YOLO\nmodel = YOLO('yolov8n.pt')\nresults = model('imagen.jpg')",
+    "image": "https://source.unsplash.com/600x400/?camera,detection"
+  },
+  {
+    "id": "model-bert",
+    "name": "BERT",
+    "type": "model",
+    "description": "Bidirectional Encoder Representations from Transformers - Modelo preentrenado de Google para tareas de comprensión del lenguaje natural.",
+    "tags": ["NLP", "transformers", "Google", "clasificación"],
+    "usage": "// Usar BERT con Transformers\nfrom transformers import BertModel\nmodel = BertModel.from_pretrained('bert-base-uncased')",
+    "image": "https://source.unsplash.com/600x400/?text,analysis"
+  },
+  {
+    "id": "dataset-mnist",
+    "name": "MNIST",
+    "type": "dataset",
+    "description": "Dataset clásico de dígitos manuscritos (0-9) con 70,000 imágenes, fundamental para aprendizaje automático.",
+    "tags": ["visión", "clasificación", "dígitos", "básico"],
+    "usage": "// Cargar MNIST con TensorFlow\nimport tensorflow as tf\n(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()",
+    "image": "https://source.unsplash.com/600x400/?numbers,handwriting"
   }
 ]
