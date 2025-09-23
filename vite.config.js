@@ -1,17 +1,46 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { visualizer } from 'rollup-plugin-visualizer';
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  root: '.', // 👈 necesario para que Vite encuentre public/index.html
-  plugins: [react()],
+  plugins: [
+    react(),
+    visualizer({
+      open: false,
+      gzipSize: true,
+      brotliSize: true,
+    })
+  ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          utils: ['axios']
+        }
+      }
+    },
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    },
+    reportCompressedSize: false,
+    chunkSizeWarningLimit: 1000
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'axios']
+  },
   server: {
     port: 5173,
-    proxy: {
-      '/api': 'http://localhost:3000',
-    },
+    open: true,
+    cors: true
   },
-  build: {
-    outDir: 'dist', // por si lo necesitas explícito
-    emptyOutDir: true
+  preview: {
+    port: 4173,
+    open: true
   }
 });

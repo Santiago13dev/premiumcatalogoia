@@ -1,65 +1,69 @@
-/**
- * Servidor backend sencillo usando Express.
- * Define endpoints para listar todos los componentes y obtener uno por ID.
- * Express se describe como un framework web rápido y minimalista para Node.js【947952538608249†L75-L100】, por lo que es ideal para un API ligero.
- */
-const path = require('path');
-const express = require('express');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import componentsRoutes from './routes/components.js';
+import authRoutes from './routes/auth.js';
+import favoritesRoutes from './routes/favorites.js';
+import analyticsRoutes from './routes/analytics.js';
+import { errorHandler } from './middleware/errorHandler.js';
+import { rateLimiter } from './middleware/rateLimiter.js';
+import { logger } from './utils/logger.js';
+import { connectDB } from './config/database.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Cargar los datos de componentes. Se usa require para importar el JSON una vez.
-const components = require('../src/data/components.json');
+// Database connection
+connectDB();
 
-// Middleware para parsear JSON en solicitudes entrantes (no se usa en este ejemplo pero se deja listo).
+// Middleware
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  credentials: true
+}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(logger);
+app.use(rateLimiter);
 
-// Endpoint para obtener la lista completa de componentes
-app.get('/api/components', (req, res) => {
-  res.json(components);
+// API Routes
+app.use('/api/components', componentsRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/favorites', favoritesRoutes);
+app.use('/api/analytics', analyticsRoutes);
+
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
 });
 
-// Endpoint para obtener un componente específico por su id
-app.get('/api/components/:id', (req, res) => {
-  const comp = components.find((c) => c.id === req.params.id);
-  if (!comp) {
-    return res.status(404).json({ message: 'Componente no encontrado' });
-  }
-  res.json(comp);
-});
+// Serve static files in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(join(__dirname, '../dist')));
+  
+  app.get('*', (req, res) => {
+    res.sendFile(join(__dirname, '../dist', 'index.html'));
+  });
+}
 
-// Servir los archivos estáticos del frontend si se ha generado con `npm run build`.
-// La carpeta `dist` es creada por Vite.
-app.use(express.static(path.join(__dirname, '../dist')));
+// Error handling
+app.use(errorHandler);
 
-// Para cualquier otra ruta, devolver index.html (soporta navegación por cliente)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
-});
-
+// Start server
 app.listen(PORT, () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
 });
 
-const axios = require('axios');
-
-app.post('/api/try-prompt', async (req, res) => {
-  const { prompt, input } = req.body;
-
-  const fullPrompt = prompt.replace('{input}', input);
-
-  try {
-    const response = await axios.post('http://localhost:11434/api/chat', {
-      model: 'llama3',
-      messages: [
-        { role: 'user', content: fullPrompt }
-      ]
-    });
-
-    res.json({ output: response.data.message.content });
-  } catch (err) {
-    console.error(err.response?.data || err.message);
-    res.status(500).json({ error: 'Error al comunicarse con Ollama' });
-  }
-});
+export default app;
