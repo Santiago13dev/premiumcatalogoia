@@ -41,7 +41,7 @@ premiumcatalogoia/
 
 ### 1. Clona el repositorio
 ```bash
-git clone https://github.com/tuusuario/premiumcatalogoia.git
+git clone https://github.com/Santiago13dev/premiumcatalogoia.git
 cd premiumcatalogoia
 ```
 
@@ -95,24 +95,11 @@ npm run dev
 }
 ```
 
----
-
-## 💡 Futuras mejoras
-
-| Idea | Estado |
-|------|--------|
-| Editor visual de prompts | 🟡 Pendiente |
-| Soporte para más modelos (Mistral, Phi) | 🟡 En camino |
-| Exportación de componentes en Markdown/ZIP | 🔜 |
-| Subida de imagen o PDF para análisis | 🔜 |
-
----
-
 ## 🧑‍💻 Autor
 
 Desarrollado con 💙 por **Santiago Rodríguez**  
 🎓 Full-stack Developer | DevOps | AI Enthusiast  
-📫 [TuCorreo@ejemplo.com]
+📫 [kevin.rodriguezgomez1308@gmail.com]
 
 ---
 
