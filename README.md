@@ -2,7 +2,7 @@
 
 ## Catálogo de Componentes de Inteligencia Artificial
 
-Una plataforma moderna y completa para descubrir, evaluar y utilizar componentes de IA.
+Una plataforma moderna y completa para descubrir, evaluar y utilizar componentes de IA — frontend en React + Vite y backend en Node/Express con integración para modelos y APIs de terceros.
 
 ## 🌟 Características
 
@@ -37,23 +37,21 @@ Una plataforma moderna y completa para descubrir, evaluar y utilizar componentes
 - Redis 7+
 - npm o yarn
 
-### Pasos de instalación
+## Instalación y ejecución (local)
 
-1. **Clonar el repositorio**
-```bash
+1) Clona el repositorio:
+
+```powershell
 git clone https://github.com/Santiago13dev/premiumcatalogoia.git
 cd premiumcatalogoia
+git checkout feature/cambios-MVP
 ```
 
-2. **Instalar dependencias**
-```bash
-# Instalar dependencias del frontend
-npm install
+2) Instala dependencias (raíz = frontend):
 
-# Instalar dependencias del backend
-cd server
+```powershell
 npm install
-cd ..
+cd server; npm install; cd ..
 ```
 
 3. **Configurar variables de entorno**
@@ -67,182 +65,107 @@ nano .env
 
 4. **Variables de entorno necesarias**
 ```env
-# Server
+# Cliente (Vite): todas las variables públicas deben empezar con VITE_
+VITE_OPENAI_API_KEY=your-openai-key-here
+VITE_ANTHROPIC_API_KEY=your-anthropic-key-here
+VITE_HUGGINGFACE_API_KEY=your-hf-key-here
+
+# Server (si quieres que el backend use variables desde la raíz)
 NODE_ENV=development
 PORT=3000
 CLIENT_URL=http://localhost:5173
-
-# Database
 MONGODB_URI=mongodb://localhost:27017/ai-catalog
 REDIS_URL=redis://localhost:6379
-
-# Security
 JWT_SECRET=your-secret-key-here
 ENCRYPTION_KEY=your-32-byte-encryption-key
-
-# AI APIs (opcional)
-VITE_OPENAI_API_KEY=your-openai-key
-VITE_ANTHROPIC_API_KEY=your-anthropic-key
-VITE_HUGGINGFACE_API_KEY=your-hf-key
 ```
 
-5. **Iniciar servicios de desarrollo**
+Importante: las claves para APIs públicas del frontend deben usar el prefijo `VITE_` para ser accesibles desde el bundle de Vite. Si prefieres mantener las claves en el backend, colócalas en `server/.env` y expón endpoints del servidor en lugar de enviar claves al cliente.
 
-**Opción 1: Con Docker Compose (recomendado)**
-```bash
+4) Cómo ejecutar en desarrollo
+
+Opción con Docker (recomendado cuando quieras replicar el entorno completo):
+
+```powershell
 docker-compose up -d
 ```
 
-**Opción 2: Manual**
-```bash
-# Terminal 1 - MongoDB
-mongod
+Opción local (separar terminales):
 
-# Terminal 2 - Redis
-redis-server
+```powershell
+# Terminal 1 - MongoDB (si no usas Docker)
+# mongod
+
+# Terminal 2 - Redis (si no usas Docker)
+# redis-server
 
 # Terminal 3 - Backend
+cd server
 npm run server:dev
 
 # Terminal 4 - Frontend
+cd ..
 npm run dev
 ```
 
-6. **Acceder a la aplicación**
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:3000
-- MongoDB: localhost:27017
-- Redis: localhost:6379
+Accede a la app en `http://localhost:5173` y a la API en `http://localhost:3000`.
 
-## 🛠️ Scripts disponibles
+## ⚠️ Uso de API keys para probar componentes de IA (importante)
 
-```bash
-# Desarrollo
-npm run dev          # Frontend en modo desarrollo
-npm run server:dev   # Backend en modo desarrollo
+Los componentes de IA en `src/components/` usan servicios que delegan peticiones a APIs externas (OpenAI, Anthropic, HuggingFace, etc.). Para probarlos localmente debes proporcionar tus propias API keys.
 
-# Producción
-npm run build        # Build del frontend
-npm start           # Iniciar servidor backend
+Pasos recomendados:
 
-# Testing
-npm test            # Ejecutar tests
-npm run test:watch  # Tests en modo watch
-npm run test:coverage # Coverage report
+1. Crea un archivo `.env` en la raíz del proyecto y añade las variables `VITE_...` mostradas arriba.
+2. Si prefieres no exponer las claves al frontend, coloca las claves en `server/.env` (sin `VITE_`), y cambia `src/services/aiService.js` para que apunte a endpoints del backend que envían las respuestas.
+3. Reinicia el servidor de desarrollo después de cambiar `.env`.
 
-# Linting
-npm run lint        # Verificar código
+Ejemplo rápido (PowerShell) — establecer variables de entorno temporales en la sesión actual antes de arrancar el frontend:
 
-# Migraciones
-npm run migrate     # Ejecutar migraciones de DB
+```powershell
+#$env:VITE_OPENAI_API_KEY = 'sk-...'
+#$env:VITE_ANTHROPIC_API_KEY = 'anthropic-...'
+npm run dev
 ```
 
-## 📁 Estructura del proyecto
+Advertencias de seguridad:
 
+- Nunca comites tus claves ni subas `.env` con secretos al repositorio.
+- Usa variables de entorno del backend cuando sea posible y aplica límites/rate limiting.
+- Para CI/CD, configura secrets en el proveedor (GitHub Actions, etc.) y no incluyas claves en los workflows.
+
+## 🛠️ Scripts útiles
+
+```powershell
+# Frontend desarrollo
+npm run dev
+
+# Backend desarrollo (desde /server)
+cd server; npm run server:dev
+
+# Build frontend
+npm run build
+
+# Tests
+npm test
 ```
-premiumcatalogoia/
-├── src/                  # Código fuente del frontend
-│   ├── components/       # Componentes React
-│   ├── services/         # Servicios y APIs
-│   ├── hooks/           # Custom hooks
-│   ├── context/         # Context providers
-│   └── utils/           # Utilidades
-├── server/              # Backend API
-│   ├── controllers/     # Controladores
-│   ├── models/         # Modelos de MongoDB
-│   ├── routes/         # Rutas de API
-│   ├── middleware/     # Middleware
-│   ├── websocket/      # WebSocket server
-│   └── monitoring/     # Metrics y health
-├── public/             # Archivos estáticos
-├── scripts/            # Scripts de utilidad
-├── kubernetes/         # Manifiestos K8s
-├── tests/             # Tests
-└── docs/              # Documentación
+
+## 🧪 Testing
+
+El proyecto incluye tests básicos con Jest en `src/__tests__/`. Ejecuta:
+
+```powershell
+npm test
 ```
 
 ## 🚀 Deployment
 
-### Vercel (Frontend)
-```bash
-vercel --prod
-```
+- Vercel: despliega el frontend y proporciona las variables `VITE_...` como secretos.
+- PM2: `pm2 start pm2.config.js` para el backend.
+- Docker: `docker build -t premiumcatalogoia:latest .` y `docker run -p 3000:3000 premiumcatalogoia:latest`.
+- Kubernetes: `kubectl apply -f kubernetes/` (revisa `kubernetes/*.yaml` para variables y secretos).
 
-### PM2 (Backend)
-```bash
-pm2 start pm2.config.js
-```
+## � Licencia
 
-### Docker
-```bash
-docker build -t premiumcatalogoia:latest .
-docker run -p 3000:3000 premiumcatalogoia:latest
-```
-
-### Kubernetes
-```bash
-kubectl apply -f kubernetes/
-```
-
-## 📝 API Documentation
-
-La documentación completa de la API está disponible en [/docs/API.md](./docs/API.md)
-
-## 🧪 Testing
-
-```bash
-# Unit tests
-npm test
-
-# E2E tests
-npm run test:e2e
-
-# Coverage
-npm run test:coverage
-```
-
-## 🔒 Seguridad
-
-- Helmet.js para headers de seguridad
-- Rate limiting con Redis
-- Input validation y sanitización
-- JWT con refresh tokens
-- Encriptación de datos sensibles
-- Audit logging
-
-## 📊 Monitoring
-
-- Health checks: `/health`
-- Metrics: `/metrics` (Prometheus)
-- Logs: Winston con rotación
-- Performance monitoring
-
-## 🤝 Contribuir
-
-Las contribuciones son bienvenidas! Por favor:
-
-1. Fork el proyecto
-2. Crea tu feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la branch (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
-
-## 👥 Autor
-
-**Santiago Dev**
-- GitHub: [@Santiago13dev](https://github.com/Santiago13dev)
-
-## 🙏 Agradecimientos
-
-- OpenAI por las APIs de IA
-- TensorFlow.js team
-- Comunidad de React
-- Todos los contribuidores
-
----
-
-⭐ Si este proyecto te fue útil, considera darle una estrella!
+Este proyecto está bajo la Licencia MIT — ver [LICENSE](LICENSE).
+Santiago13dev 
